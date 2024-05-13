@@ -26,20 +26,34 @@ env:
 jobs:
   check_pages:
     runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.branch.outputs.enabled && steps.check.outputs.enabled }}
     steps:
-      - name: Check if Pages are enabled
-        id: check
+      - name: Check if this is the default branch
+        id: branch
         run: |
           if [ ${{github.ref_name == github.event.repository.default_branch}} == false ]
           then
             echo "::warning:: This is not the default branch, skipping deployment"
-            exit 1
+            echo "enabled=false" >> $GITHUB_OUTPUT
+          else
+            echo "enabled=true" >> $GITHUB_OUTPUT
           fi
-          gh api /repos/$GITHUB_REPOSITORY/pages
+      - name: Check if Pages are enabled
+        if: steps.branch.outputs.enabled == 'true'
+        id: check
+        run: |
+          if ! gh api /repos/$GITHUB_REPOSITORY/pages; then
+            echo "::warning:: Pages are disabled, skipping deployment"
+            echo "enabled=false" >> $GITHUB_OUTPUT
+          else
+            echo "enabled=true" >> $GITHUB_OUTPUT
+          fi
         env:
           GH_TOKEN: ${{ github.token }}
   build:
     name: Build
+    if: needs.check_pages.outputs.enabled == 'true'
     needs: check_pages
     runs-on: ubuntu-latest
 

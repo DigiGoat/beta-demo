@@ -53,7 +53,7 @@ describe('GoatCardComponent', () => {
     it('should have an image', () => {
       const element = html.querySelector('[test-id="goat-image"]') as HTMLImageElement & { ngSrc: string; };
       expect(element).toBeTruthy();
-      expect(element.ngSrc).toBe('/assets/images/TEST_NICKNAME/TEST_IMAGE_FILE');
+      expect(element.ngSrc).toBe('./assets/images/TEST_NICKNAME/TEST_IMAGE_FILE');
       expect(element.width).toBe(400);
       expect(element.height).toBe(250);
     });

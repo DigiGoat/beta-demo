@@ -24,7 +24,7 @@ describe('GoatService', () => {
       service.does.subscribe(data =>
         expect(data).toEqual(testData)
       );
-      const req = http.expectOne('/assets/resources/does.json');
+      const req = http.expectOne('./assets/resources/does.json');
       expect(req.request.method).toEqual('GET');
       req.flush(testData);
     });
@@ -33,11 +33,11 @@ describe('GoatService', () => {
       service.does.subscribe(data =>
         expect(data).toEqual(testData)
       );
-      let req = http.expectOne('/assets/resources/does.json');
+      let req = http.expectOne('./assets/resources/does.json');
       req.flush('Deliberate Error', { status: 404, statusText: 'Not Found' });
-      req = http.expectOne('/assets/resources/does.json');
+      req = http.expectOne('./assets/resources/does.json');
       req.flush('Deliberate Error', { status: 0, statusText: 'Network Error' });
-      req = http.expectOne('/assets/resources/does.json');
+      req = http.expectOne('./assets/resources/does.json');
       req.flush(testData);
     });
     it('should handle server errors', () => {
@@ -51,7 +51,7 @@ describe('GoatService', () => {
       );
 
       for (let i = 0; i < 4; i++) {
-        const req = http.expectOne('/assets/resources/does.json');
+        const req = http.expectOne('./assets/resources/does.json');
         req.flush('Deliberate Error', { status: 404, statusText: 'Not Found' });
       }
     });
@@ -66,7 +66,7 @@ describe('GoatService', () => {
       );
 
       for (let i = 0; i < 4; i++) {
-        const req = http.expectOne('/assets/resources/does.json');
+        const req = http.expectOne('./assets/resources/does.json');
         req.flush('Deliberate Error', { status: 0, statusText: 'Network Error' });
       }
     });
@@ -77,20 +77,20 @@ describe('GoatService', () => {
       service.does.subscribe(data =>
         expect(data).toEqual(testData)
       );
-      http.expectNone('/assets/resources/does.json');
+      http.expectNone('./assets/resources/does.json');
     });
     it('should ignore cache if empty (even if previous request succeeded)', () => {
       const testData = [{}, {}, {}, {}, {}];
       service.does.subscribe(data =>
         expect(data).toEqual([])
       );
-      const req = http.expectOne('/assets/resources/does.json');
+      const req = http.expectOne('./assets/resources/does.json');
       expect(req.request.method).toEqual('GET');
       req.flush([]);
       service.does.subscribe(data =>
         expect(data).toEqual(testData)
       );
-      const req2 = http.expectOne('/assets/resources/does.json');
+      const req2 = http.expectOne('./assets/resources/does.json');
       expect(req2.request.method).toEqual('GET');
       req2.flush(testData);
     });
@@ -108,7 +108,7 @@ describe('GoatService', () => {
       service.bucks.subscribe(data =>
         expect(data).toEqual(testData)
       );
-      const req = http.expectOne('/assets/resources/bucks.json');
+      const req = http.expectOne('./assets/resources/bucks.json');
       expect(req.request.method).toEqual('GET');
       req.flush(testData);
     });
@@ -118,11 +118,11 @@ describe('GoatService', () => {
       service.bucks.subscribe(data =>
         expect(data).toEqual(testData)
       );
-      let req = http.expectOne('/assets/resources/bucks.json');
+      let req = http.expectOne('./assets/resources/bucks.json');
       req.flush('Deliberate Error', { status: 404, statusText: 'Not Found' });
-      req = http.expectOne('/assets/resources/bucks.json');
+      req = http.expectOne('./assets/resources/bucks.json');
       req.flush('Deliberate Error', { status: 0, statusText: 'Network Error' });
-      req = http.expectOne('/assets/resources/bucks.json');
+      req = http.expectOne('./assets/resources/bucks.json');
       req.flush(testData);
     });
 
@@ -136,7 +136,7 @@ describe('GoatService', () => {
       });
 
       for (let i = 0; i < 4; i++) {
-        const req = http.expectOne('/assets/resources/bucks.json');
+        const req = http.expectOne('./assets/resources/bucks.json');
         req.flush('Deliberate Error', { status: 404, statusText: 'Not Found' });
       }
     });
@@ -151,7 +151,7 @@ describe('GoatService', () => {
       });
 
       for (let i = 0; i < 4; i++) {
-        const req = http.expectOne('/assets/resources/bucks.json');
+        const req = http.expectOne('./assets/resources/bucks.json');
         req.flush('Deliberate Error', { status: 0, statusText: 'Network Error' });
       }
     });
@@ -163,7 +163,7 @@ describe('GoatService', () => {
       service.bucks.subscribe(data =>
         expect(data).toEqual(testData)
       );
-      http.expectNone('/assets/resources/bucks.json');
+      http.expectNone('./assets/resources/bucks.json');
     });
 
     it('should ignore cache if empty (even if previous request succeeded)', () => {
@@ -171,13 +171,13 @@ describe('GoatService', () => {
       service.bucks.subscribe(data =>
         expect(data).toEqual([])
       );
-      const req = http.expectOne('/assets/resources/bucks.json');
+      const req = http.expectOne('./assets/resources/bucks.json');
       expect(req.request.method).toEqual('GET');
       req.flush([]);
       service.bucks.subscribe(data =>
         expect(data).toEqual(testData)
       );
-      const req2 = http.expectOne('/assets/resources/bucks.json');
+      const req2 = http.expectOne('./assets/resources/bucks.json');
       expect(req2.request.method).toEqual('GET');
       req2.flush(testData);
     });

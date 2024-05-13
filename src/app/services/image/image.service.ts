@@ -14,7 +14,7 @@ export class ImageService {
     const key = Object.keys(this.imageMap).find(directory => searchQueries.includes(directory));
     if (key && this.imageMap[key].length) {
       const image = this.imageMap[key][0];
-      return { ...image, file: `/assets/images/${key}/${image.file}` };
+      return { ...image, file: `./assets/images/${key}/${image.file}` };
     }
     //Intentionally give an invalid link
     return { ...this.NotFound, file: '/' };
@@ -22,14 +22,14 @@ export class ImageService {
   getImages(searchQueries: (string | undefined)[]) {
     const key = Object.keys(this.imageMap).find(directory => searchQueries.includes(directory));
     if (key && this.imageMap[key].length) {
-      const images = this.imageMap[key].map(image => { return { ...image, file: `/assets/images/${key}/${image.file}` }; });
+      const images = this.imageMap[key].map(image => { return { ...image, file: `./assets/images/${key}/${image.file}` }; });
       return images;
     }
     //Intentionally give an invalid link
     return [{ ...this.NotFound, file: '/' }];
   }
 
-  public readonly NotFound: ImageEntry = { file: '/assets/images/ImageNotFound.png', alt: 'The Requested Image Does Not Exist' };
+  public readonly NotFound: ImageEntry = { file: './assets/images/ImageNotFound.png', alt: 'The Requested Image Does Not Exist' };
 }
 type ImageMap = {
   [directory: string]: ImageEntry[];

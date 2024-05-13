@@ -40,23 +40,23 @@ describe('ImageService', () => {
   test('const NotFound', () => {
     expect(service.NotFound).toEqual({
       alt: 'The Requested Image Does Not Exist',
-      file: '/assets/images/ImageNotFound.png',
+      file: './assets/images/ImageNotFound.png',
     });
   });
   describe('getImage()', () => {
     it('should match an image when provided with a nickname', () => {
       const image = service.getImage(['FAKE_NAME', nickname, 'FAKE_ID']);
-      expect(image.file).toEqual(`/assets/images/${nickname}/${nicknameFile}`);
+      expect(image.file).toEqual(`./assets/images/${nickname}/${nicknameFile}`);
       expect(image.alt).toBeUndefined();
     });
     it('should match an image when provided with an id', () => {
       const image = service.getImage(['FAKE_NAME', id, 'FAKE_NICKNAME']);
-      expect(image.file).toEqual(`/assets/images/${id}/${idFile}`);
+      expect(image.file).toEqual(`./assets/images/${id}/${idFile}`);
       expect(image.alt).toEqual(idDescription);
     });
     it('should match an image when provided with a name', () => {
       const image = service.getImage([name, 'FAKE_ID', 'FAKE_NICKNAME']);
-      expect(image.file).toEqual(`/assets/images/${name}/${nameFile}`);
+      expect(image.file).toEqual(`./assets/images/${name}/${nameFile}`);
       expect(image.alt).toBeUndefined();
 
     });
@@ -71,21 +71,21 @@ describe('ImageService', () => {
       const images = service.getImages(['FAKE_NICKNAME', nickname, 'FAKE_ID']);
       expect(images).toHaveLength(1);
       const image = images[0];
-      expect(image.file).toEqual(`/assets/images/${nickname}/${nicknameFile}`);
+      expect(image.file).toEqual(`./assets/images/${nickname}/${nicknameFile}`);
       expect(image.alt).toBeUndefined();
     });
     it('should match images when provided with an id', () => {
       const images = service.getImages(['FAKE_ID', id, 'FAKE_NICKNAME']);
       expect(images).toHaveLength(1);
       const image = images[0];
-      expect(image.file).toEqual(`/assets/images/${id}/${idFile}`);
+      expect(image.file).toEqual(`./assets/images/${id}/${idFile}`);
       expect(image.alt).toEqual(idDescription);
     });
     it('should match images when provided with a name', () => {
       const images = service.getImages([name, 'FAKE_ID', 'FAKE_NICKNAME']);
       expect(images).toHaveLength(1);
       const image = images[0];
-      expect(image.file).toEqual(`/assets/images/${name}/${nameFile}`);
+      expect(image.file).toEqual(`./assets/images/${name}/${nameFile}`);
       expect(image.alt).toBeUndefined();
     });
     it('should return notFound if the image is not found', () => {

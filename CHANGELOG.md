@@ -1,3 +1,7 @@
+# 1.0.1-beta.5
+* Tweaked the script for handling the pages deployment
+* Fixed a bug causing files to fail to load if the website address was not at the base of the domain
+
 # 1.0.1-beta.4
 * Fixed a bug causing the page to be improperly uploaded during the deployment
 
