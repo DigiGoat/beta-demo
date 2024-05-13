@@ -1,3 +1,6 @@
+# 1.0.1-beta.3
+* Fixed bug causing the page not to deploy automatically
+
 # 1.0.1-beta.2
 * Trying to fix commit history for future pull requests
 
