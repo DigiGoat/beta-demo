@@ -1,3 +1,6 @@
+# 1.0.1-beta.7
+* Added additional 500ms delay before checking if the placeholder effect should be added
+
 # 1.0.1-beta.6
 * Images no longer appear to "flicker" when opening and closing a goat 🎉
 

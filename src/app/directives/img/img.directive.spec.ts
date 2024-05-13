@@ -49,6 +49,7 @@ describe('ImgDirective', () => {
       notFoundSpy = jest.spyOn(directive, 'notFound');
       consoleSpy = jest.spyOn(console, 'warn');
       html = el.nativeElement;
+      jest.useFakeTimers();
     });
 
     it('should create an instance', () => {
@@ -59,6 +60,7 @@ describe('ImgDirective', () => {
     it('should add placeholder class to image and parent class if the image is loading', () => {
       const imgSpy = jest.spyOn(html, 'complete', 'get').mockReturnValue(false);
       directive.ngOnInit();
+      jest.runAllTimers();
       expect(imgSpy).toHaveBeenCalledTimes(1);
 
       expect(placeholderSpy).toHaveBeenCalledTimes(1);
@@ -79,6 +81,8 @@ describe('ImgDirective', () => {
     it('should not add placeholder class if the image is loaded', () => {
       const imgSpy = jest.spyOn(html, 'complete', 'get').mockReturnValue(true);
       directive.ngOnInit();
+      expect(imgSpy).not.toHaveBeenCalled();
+      jest.runAllTimers();
       expect(imgSpy).toHaveBeenCalledTimes(1);
 
       expect(placeholderSpy).not.toHaveBeenCalled();
