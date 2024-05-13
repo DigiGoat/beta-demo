@@ -8,7 +8,9 @@ export class ImgDirective implements OnInit {
   constructor(private el: ElementRef<HTMLImageElement>, private imageService: ImageService) { }
 
   ngOnInit() {
-    this.placeholder(true);
+    if (!this.el.nativeElement.complete) {
+      this.placeholder(true);
+    }
     this.el.nativeElement.addEventListener('load', () => {
       this.placeholder(false);
     });

@@ -1,3 +1,6 @@
+# 1.0.1-beta.6
+* Images no longer appear to "flicker" when opening and closing a goat 🎉
+
 # 1.0.1-beta.5
 * Tweaked the script for handling the pages deployment
 * Fixed a bug causing files to fail to load if the website address was not at the base of the domain

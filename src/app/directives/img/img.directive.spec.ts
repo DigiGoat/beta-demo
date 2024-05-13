@@ -48,15 +48,19 @@ describe('ImgDirective', () => {
       placeholderSpy = jest.spyOn(directive, 'placeholder');
       notFoundSpy = jest.spyOn(directive, 'notFound');
       consoleSpy = jest.spyOn(console, 'warn');
-      directive.ngOnInit();
       html = el.nativeElement;
     });
 
     it('should create an instance', () => {
+      directive.ngOnInit();
       expect(directive).toBeTruthy();
     });
 
-    it('should add placeholder class to image and parent class ', () => {
+    it('should add placeholder class to image and parent class if the image is loading', () => {
+      const imgSpy = jest.spyOn(html, 'complete', 'get').mockReturnValue(false);
+      directive.ngOnInit();
+      expect(imgSpy).toHaveBeenCalledTimes(1);
+
       expect(placeholderSpy).toHaveBeenCalledTimes(1);
       expect(placeholderSpy).toHaveBeenCalledWith(true);
 
@@ -72,7 +76,16 @@ describe('ImgDirective', () => {
       }
     });
 
+    it('should not add placeholder class if the image is loaded', () => {
+      const imgSpy = jest.spyOn(html, 'complete', 'get').mockReturnValue(true);
+      directive.ngOnInit();
+      expect(imgSpy).toHaveBeenCalledTimes(1);
+
+      expect(placeholderSpy).not.toHaveBeenCalled();
+    });
+
     it('should remove placeholder class and parent class on load event', () => {
+      directive.ngOnInit();
       placeholderSpy.mockClear();
       html.dispatchEvent(new Event('load'));
 
@@ -90,6 +103,7 @@ describe('ImgDirective', () => {
     });
 
     it('should log warning and call notFound method on error event', () => {
+      directive.ngOnInit();
       placeholderSpy.mockClear();
       html.dispatchEvent(new Event('error'));
 
