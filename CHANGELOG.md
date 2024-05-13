@@ -1,3 +1,6 @@
+# 1.0.1-beta.4
+* Fixed a bug causing the page to be improperly uploaded during the deployment
+
 # 1.0.1-beta.3
 * Fixed bug causing the page not to deploy automatically
 

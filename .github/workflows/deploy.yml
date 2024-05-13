@@ -67,7 +67,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/web-ui
+          path: ./dist/web-ui/browser
 
   deploy:
     environment:
