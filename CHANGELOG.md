@@ -1,3 +1,7 @@
+# 1.0.1-beta.8
+* Added full support for Microsoft Clarity and Google Analytics
+* Removed source code message from footer
+
 # 1.0.1-beta.7
 * Added additional 500ms delay before checking if the placeholder effect should be added
 

@@ -24,4 +24,8 @@ describe('PlatformService', () => {
   it('should have isBot property', () => {
     expect(service.isBot).toBeDefined();
   });
+
+  it('should have isDev property', () => {
+    expect(service.isDev).toBeDefined();
+  });
 });

@@ -1,6 +1,7 @@
 import type { Meta, Title } from '@angular/platform-browser';
 import type { RouterStateSnapshot } from '@angular/router';
 import { ConfigServiceMock, EmptyConfigServiceMock } from '../services/config/config.service.mock';
+import type { PlatformService } from '../services/platform/platform.service';
 import { TitleStrategy } from './title.strategy';
 
 describe('TitleStrategy', () => {
@@ -9,7 +10,8 @@ describe('TitleStrategy', () => {
     const title = { setTitle: jest.fn() } as unknown as Title;
     const configService = ConfigServiceMock;
     const meta = { getTags: jest.fn().mockReturnValue(['TEST_TAG']), removeTagElement: jest.fn(), addTags: jest.fn() } as unknown as Meta;
-    strategy = new TitleStrategy(title, configService, meta);
+    const platform = { isBrowser: true, isDev: false } as unknown as PlatformService;
+    strategy = new TitleStrategy(title, configService, meta, platform);
     jest.spyOn(strategy, 'buildTitle').mockReturnValue('TEST_TITLE');
   });
   it('should create', () => {
@@ -100,6 +102,22 @@ describe('TitleStrategy', () => {
       strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
       expect(strategy['meta'].addTags).toHaveBeenCalledTimes(1);
       expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ 'content': 'TEST_TITLE', 'name': 'og:title' }, { 'content': 'TEST_URL', 'name': 'og:url' }, { 'content': '', 'name': 'og:site_name' }, { 'content': 'website', 'name': 'og:type' }]);
+    });
+  });
+  describe('Analytics', () => {
+    const gtag = jest.fn();
+    beforeEach(() => {
+      (window as unknown as { gtag: jest.Mock; }).gtag = gtag;
+    });
+    it('Should send page views if gtag is configured', () => {
+      strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
+      expect(gtag).toHaveBeenCalledTimes(1);
+      expect(gtag).toHaveBeenCalledWith('event', 'page_view', { page_path: 'TEST_URL' });
+    });
+    it('Should not send page views if gtag is unconfigured', () => {
+      delete (window as unknown as { gtag?: jest.Mock; }).gtag;
+      strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
+      expect(gtag).toHaveBeenCalledTimes(0);
     });
   });
 });

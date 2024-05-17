@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { TitleStrategy as NgTitleStrategy, type RouterStateSnapshot } from '@angular/router';
 import { ConfigService } from '../services/config/config.service';
+import { PlatformService } from '../services/platform/platform.service';
 
 @Injectable({ providedIn: 'root' })
 export class TitleStrategy extends NgTitleStrategy {
-  constructor(private readonly title: Title, private configService: ConfigService, private meta: Meta) {
+  constructor(private readonly title: Title, private configService: ConfigService, private meta: Meta, private platform: PlatformService) {
     super();
   }
   private readonly tags = ['og:title', 'og:url', 'og:site_name', 'og:type', 'og:description', 'og:image', 'og:image:alt', 'description'];
@@ -23,6 +24,11 @@ export class TitleStrategy extends NgTitleStrategy {
       ]);
     } else {
       this.title.setTitle(this.configService.tabTitle);
+    }
+    if (this.platform.isBrowser && !this.platform.isDev && 'gtag' in window) {
+      window.gtag('event', 'page_view', {
+        page_path: routerState.url
+      });
     }
   }
   formatTitle(title: string, routerState: RouterStateSnapshot): string {

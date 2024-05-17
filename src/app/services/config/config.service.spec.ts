@@ -25,7 +25,11 @@ describe('ConfigService', () => {
         homeDescription: 'TEST_DESCRIPTION',
         menubarTitle: 'TEST_MENUBAR_TITLE',
         tabTitle: 'TEST_TAB_TITLE',
-        link: 'TEST_LINK'
+        link: 'TEST_LINK',
+        analytics: {
+          clarity: 'TEST_CLARITY',
+          gtag: 'TEST_GTAG'
+        }
       };
     });
     test('get homeTitle()', () => {
@@ -70,6 +74,22 @@ describe('ConfigService', () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(link).toBe('TEST_LINK');
     });
+    describe('get analytics()', () => {
+      let spy: jest.SpyInstance;
+      beforeEach(() => {
+        spy = jest.spyOn(service, 'analytics', 'get');
+      });
+      test('gtag', () => {
+        const gtag = service.analytics.gtag;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(gtag).toBe('TEST_GTAG');
+      });
+      test('clarity', () => {
+        const clarity = service.analytics.clarity;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(clarity).toBe('TEST_CLARITY');
+      });
+    });
   });
   describe('Without a Configuration', () => {
     test('get homeTitle()', () => {
@@ -113,6 +133,12 @@ describe('ConfigService', () => {
       const link = service.link;
       expect(spy).toHaveBeenCalledTimes(1);
       expect(link).toBe('');
+    });
+    test('get analytics()', () => {
+      const spy = jest.spyOn(service, 'analytics', 'get');
+      const analytics = service.analytics;
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(analytics).toEqual({});
     });
   });
 });

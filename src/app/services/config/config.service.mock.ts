@@ -7,7 +7,11 @@ export const ConfigServiceMock = {
   homeDescription: 'TEST_DESCRIPTION',
   menubarTitle: 'TEST_MENUBAR_TITLE',
   tabTitle: 'TEST_TAB_TITLE',
-  link: 'https://TEST.LINK'
+  link: 'https://TEST.LINK',
+  analytics: {
+    clarity: 'TEST_CLARITY',
+    gtag: 'TEST_GTAG'
+  }
 } as ConfigService;
 export const EmptyConfigServiceMock = {
   homeTitle: '',

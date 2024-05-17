@@ -1,5 +1,5 @@
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, isDevMode } from '@angular/core';
 import { isbot } from 'isbot';
 
 @Injectable({
@@ -10,6 +10,7 @@ export class PlatformService {
   public isServer = isPlatformServer(this.platformId);
   public isBrowser = isPlatformBrowser(this.platformId);
   public isBot = this.isBrowser && isbot(navigator.userAgent);
+  public isDev = isDevMode();
 
   constructor(@Inject(PLATFORM_ID)
   private platformId: object) { }
