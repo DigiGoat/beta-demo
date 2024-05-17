@@ -5,5 +5,8 @@
   "homeDescription": "The official demo of the DigiGoat Software",
   "repo": "To Be Removed",
   "menubarTitle": "DigiGoat Demo",
-  "tabTitle": "DigiGoat Demo"
+  "tabTitle": "DigiGoat Demo",
+  "analytics": {
+    "gtag": "G-ERC6X2SZYS"
+  }
 }
