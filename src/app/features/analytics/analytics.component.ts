@@ -21,7 +21,7 @@ export class AnalyticsComponent implements OnInit {
         this.el.nativeElement.innerHTML += '<script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); }</script>';
       }
     } else if (this.platformService.isBrowser) {
-      const color = window.matchMedia('(prefers-color-scheme: dark)') ? 'Dark' : 'Light';
+      const color = document.documentElement.getAttribute('data-bs-theme') == 'light' ? 'Light' : 'Dark';
       if ('clarity' in window) {
         window.clarity('set', 'Color Scheme', color);
       }

@@ -75,7 +75,7 @@ describe('AnalyticsComponent', () => {
         jest.spyOn(window, 'matchMedia').mockImplementation(() => false as unknown as MediaQueryList);
         fixture.detectChanges();
         expect(gtag).toHaveBeenCalledTimes(3);
-        expect(gtag).toHaveBeenNthCalledWith(1, 'set', 'Color Scheme', 'Light');
+        expect(gtag).toHaveBeenNthCalledWith(1, 'set', 'Color Scheme', 'Dark');
         expect(gtag).toHaveBeenNthCalledWith(2, 'js', expect.any(Date));
         expect(gtag).toHaveBeenNthCalledWith(3, 'config', 'TEST_GTAG', { send_page_view: false });
       });

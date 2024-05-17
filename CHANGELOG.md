@@ -1,3 +1,6 @@
+# 1.0.1-beta.9
+* Fixed a bug causing the color scheme to be incorrectly reported to analytics
+
 # 1.0.1-beta.8
 * Added full support for Microsoft Clarity and Google Analytics
 * Removed source code message from footer
