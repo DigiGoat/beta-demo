@@ -8,7 +8,9 @@ const gtag = jest.fn();
 describe('AnalyticsComponent', () => {
   let component: AnalyticsComponent;
   let fixture: ComponentFixture<AnalyticsComponent>;
-  let html: HTMLElement;
+  const document = {
+    createElement: jest.fn(() => { return { innerHTML: '' }; }), createComment: jest.fn(), head: { appendChild: jest.fn() }, documentElement: { getAttribute: jest.fn(() => 'dark') }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -18,7 +20,7 @@ describe('AnalyticsComponent', () => {
 
     fixture = TestBed.createComponent(AnalyticsComponent);
     component = fixture.componentInstance;
-    html = fixture.nativeElement;
+    component['document'] = document as unknown as Document;
   });
 
   it('should create', () => {
@@ -31,14 +33,12 @@ describe('AnalyticsComponent', () => {
     });
     describe('In Dev Mode', () => {
       beforeEach(() => {
-        component['platformService'] = { isServer: false, isBrowser: true, isDev: true } as PlatformService;
+        component['platformService'] = { isServer: true, isBrowser: false, isDev: true } as PlatformService;
         fixture.detectChanges();
       });
       it('should disable analytics', () => {
-        expect(html.innerHTML).toContain('Analytics disabled in development mode');
-      });
-      it('should match the snapshot', () => {
-        expect(fixture).toMatchSnapshot();
+        expect(document.createComment).toHaveBeenCalledTimes(1);
+        expect(document.head.appendChild).toHaveBeenCalledTimes(1);
       });
     });
     describe('On the server', () => {
@@ -47,17 +47,17 @@ describe('AnalyticsComponent', () => {
         fixture.detectChanges();
       });
       it('should add Clarity script', () => {
-        const elements = html.querySelectorAll('script');
-        const script = Array.from(elements).filter((el) => el.innerHTML.includes('clarity'));
-        expect(script).toHaveLength(1);
+        expect(document.createElement).toHaveBeenCalled();
+        expect(document.createElement).toHaveBeenCalledWith('script');
+        expect(document.head.appendChild).toHaveBeenCalled();
+        expect(document.head.appendChild).toHaveBeenCalledWith({ innerHTML: expect.stringContaining('TEST_CLARITY') });
       });
       it('should add gtag scripts', () => {
-        const elements = html.querySelectorAll('script');
-        const script = Array.from(elements).filter((el) => el.innerHTML.includes('gtag') || el.src.includes('gtag'));
-        expect(script).toHaveLength(2);
-      });
-      it('should match the snapshot', () => {
-        expect(fixture).toMatchSnapshot();
+        expect(document.createElement).toHaveBeenCalled();
+        expect(document.createElement).toHaveBeenCalledWith('script');
+        expect(document.head.appendChild).toHaveBeenCalled();
+        expect(document.head.appendChild).toHaveBeenCalledWith({ innerHTML: '', async: true, src: expect.stringContaining('TEST_GTAG') });
+        expect(document.head.appendChild).toHaveBeenCalledWith({ innerHTML: expect.stringContaining('function gtag()') });
       });
     });
     describe('In the Browser', () => {
@@ -72,23 +72,21 @@ describe('AnalyticsComponent', () => {
         expect(clarity).toHaveBeenCalledWith('set', 'Color Scheme', 'Dark');
       });
       it('should configure gtag', () => {
-        jest.spyOn(window, 'matchMedia').mockImplementation(() => false as unknown as MediaQueryList);
+        document.documentElement.getAttribute.mockReturnValue('light');
         fixture.detectChanges();
         expect(gtag).toHaveBeenCalledTimes(3);
-        expect(gtag).toHaveBeenNthCalledWith(1, 'set', 'Color Scheme', 'Dark');
+        expect(gtag).toHaveBeenNthCalledWith(1, 'set', 'Color Scheme', 'Light');
         expect(gtag).toHaveBeenNthCalledWith(2, 'js', expect.any(Date));
         expect(gtag).toHaveBeenNthCalledWith(3, 'config', 'TEST_GTAG', { send_page_view: false });
-      });
-      it('should match the snapshot', () => {
-        expect(fixture).toMatchSnapshot();
       });
     });
   });
   describe('Without a config', () => {
     beforeEach(() => {
       component['config'] = EmptyConfigServiceMock;
+      delete (window as unknown as { clarity?: object; }).clarity;
+      delete (window as unknown as { gtag?: object; }).gtag;
       fixture.detectChanges();
-      html = fixture.nativeElement;
     });
     describe('On the server', () => {
       beforeEach(() => {
@@ -96,18 +94,13 @@ describe('AnalyticsComponent', () => {
         fixture.detectChanges();
       });
       it('should not add scripts', () => {
-        const elements = html.querySelectorAll('script');
-        expect(elements).toHaveLength(0);
-      });
-      it('should match the snapshot', () => {
-        expect(fixture).toMatchSnapshot();
+        expect(document.createElement).toHaveBeenCalledTimes(0);
+        expect(document.head.appendChild).toHaveBeenCalledTimes(0);
       });
     });
     describe('In the Browser', () => {
       beforeEach(() => {
         component['platformService'] = { isServer: false, isBrowser: true, isDev: false } as PlatformService;
-        (window as unknown as { clarity: object; }).clarity = clarity;
-        (window as unknown as { gtag: object; }).gtag = gtag;
         fixture.detectChanges();
       });
       it('should not configure clarity', () => {
@@ -115,9 +108,6 @@ describe('AnalyticsComponent', () => {
       });
       it('should configure gtag', () => {
         expect(gtag).not.toHaveBeenCalled();
-      });
-      it('should match the snapshot', () => {
-        expect(fixture).toMatchSnapshot();
       });
     });
   });
