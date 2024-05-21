@@ -13,14 +13,16 @@ export class TitleStrategy extends NgTitleStrategy {
   override updateTitle(routerState: RouterStateSnapshot) {
     const title = this.buildTitle(routerState);
     this.tags.forEach(tag => this.meta.getTags(`name="${tag}"`).forEach(_tag => this.meta.removeTagElement(_tag)));
+    this.tags.forEach(tag => this.meta.getTags(`property="${tag}"`).forEach(_tag => this.meta.removeTagElement(_tag)));
+
     if (title !== undefined) {
       const titlePrefix = this.formatTitle(title, routerState);
       this.title.setTitle(`${titlePrefix}${this.configService.tabTitle ? ` · ${this.configService.tabTitle}` : ''}`);
       this.meta.addTags([
-        { name: 'og:title', content: titlePrefix.split(' · ').shift()! },
-        { name: 'og:url', content: this.configService.link ? (new URL(routerState.url, this.configService.link)).toString() : routerState.url },
-        { name: 'og:site_name', content: this.configService.homeTitle },
-        { name: 'og:type', content: 'website' },
+        { property: 'og:title', content: titlePrefix.split(' · ').shift()! },
+        { property: 'og:url', content: this.configService.link ? (new URL(routerState.url, this.configService.link)).toString() : routerState.url },
+        { property: 'og:site_name', content: this.configService.homeTitle },
+        { property: 'og:type', content: 'website' },
       ]);
     } else {
       this.title.setTitle(this.configService.tabTitle);

@@ -16,7 +16,7 @@ export class GoatCardComponent implements OnInit, Page {
   constructor(public imageService: ImageService, private meta: Meta) { }
   setDescription(): void | Observable<void> {
     if (this.description) {
-      this.meta.addTags([{ name: 'og:description', content: this.description }, { name: 'description', content: this.description }]);
+      this.meta.addTag({ property: 'og:description', name: 'description', content: this.description });
     }
   }
 

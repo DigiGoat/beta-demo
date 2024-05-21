@@ -1,3 +1,6 @@
+## 1.0.1-beta.11
+* Fixed OpenGraph Tags (Used for titles, links, and images on Facebook and IOS)
+
 ## 1.0.1-beta.10
 * Improved analytic scripts to be appended to the head of the document
 

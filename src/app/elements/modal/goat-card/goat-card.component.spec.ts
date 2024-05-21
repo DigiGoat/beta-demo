@@ -17,7 +17,7 @@ describe('GoatCardComponent', () => {
     fixture = TestBed.createComponent(GoatCardComponent);
     component = fixture.componentInstance;
     html = fixture.nativeElement;
-    component['meta'] = { addTags: jest.fn() } as unknown as Meta;
+    component['meta'] = { addTag: jest.fn() } as unknown as Meta;
   });
 
   it('should create', () => {
@@ -31,7 +31,7 @@ describe('GoatCardComponent', () => {
       fixture.detectChanges();
     });
     it('should not set a page description', () => {
-      expect(component['meta'].addTags).toHaveBeenCalledTimes(0);
+      expect(component['meta'].addTag).toHaveBeenCalledTimes(0);
     });
     it('should not display a name', () => {
       const element = html.querySelector('[test-id=name]');
@@ -93,8 +93,8 @@ describe('GoatCardComponent', () => {
       fixture.detectChanges();
     });
     it('should set a page description', () => {
-      expect(component['meta'].addTags).toHaveBeenCalledTimes(1);
-      expect(component['meta'].addTags).toHaveBeenCalledWith([{ 'content': 'TEST_DESCRIPTION', 'name': 'og:description' }, { 'content': 'TEST_DESCRIPTION', 'name': 'description' }]);
+      expect(component['meta'].addTag).toHaveBeenCalledTimes(1);
+      expect(component['meta'].addTag).toHaveBeenCalledWith({ content: 'TEST_DESCRIPTION', name: 'description', property: 'og:description' });
     });
     it('should display a name', () => {
       const element = html.querySelector('[test-id=name]');

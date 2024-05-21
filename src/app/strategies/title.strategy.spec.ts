@@ -45,18 +45,18 @@ describe('TitleStrategy', () => {
     it('should get old meta tags', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue(undefined);
       strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
-      expect(strategy['meta'].getTags).toHaveBeenCalledTimes(strategy['tags'].length);
+      expect(strategy['meta'].getTags).toHaveBeenCalledTimes(strategy['tags'].length * 2);
     });
     it('should remove old meta tags', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue(undefined);
       strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
-      expect(strategy['meta'].removeTagElement).toHaveBeenCalledTimes(strategy['tags'].length);
+      expect(strategy['meta'].removeTagElement).toHaveBeenCalledTimes(strategy['tags'].length * 2);
     });
     it('should add new meta tags', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue('TEST_TITLE');
       strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
       expect(strategy['meta'].addTags).toHaveBeenCalledTimes(1);
-      expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ 'content': 'TEST_TITLE', 'name': 'og:title' }, { 'content': 'https://test.link/TEST_URL', 'name': 'og:url' }, { 'content': 'TEST_TITLE', 'name': 'og:site_name' }, { 'content': 'website', 'name': 'og:type' }]);
+      expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ content: 'TEST_TITLE', property: 'og:title' }, { content: 'https://test.link/TEST_URL', property: 'og:url' }, { content: 'TEST_TITLE', property: 'og:site_name' }, { content: 'website', property: 'og:type' }]);
     });
   });
   describe('Without a Config', () => {
@@ -90,18 +90,18 @@ describe('TitleStrategy', () => {
     it('should get old meta tags', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue(undefined);
       strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
-      expect(strategy['meta'].getTags).toHaveBeenCalledTimes(strategy['tags'].length);
+      expect(strategy['meta'].getTags).toHaveBeenCalledTimes(strategy['tags'].length * 2);
     });
     it('should remove old meta tags', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue(undefined);
       strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
-      expect(strategy['meta'].removeTagElement).toHaveBeenCalledTimes(strategy['tags'].length);
+      expect(strategy['meta'].removeTagElement).toHaveBeenCalledTimes(strategy['tags'].length * 2);
     });
     it('should add new meta tags', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue('TEST_TITLE');
       strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
       expect(strategy['meta'].addTags).toHaveBeenCalledTimes(1);
-      expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ 'content': 'TEST_TITLE', 'name': 'og:title' }, { 'content': 'TEST_URL', 'name': 'og:url' }, { 'content': '', 'name': 'og:site_name' }, { 'content': 'website', 'name': 'og:type' }]);
+      expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ content: 'TEST_TITLE', property: 'og:title' }, { content: 'TEST_URL', property: 'og:url' }, { content: '', property: 'og:site_name' }, { content: 'website', property: 'og:type' }]);
     });
   });
   describe('Analytics', () => {

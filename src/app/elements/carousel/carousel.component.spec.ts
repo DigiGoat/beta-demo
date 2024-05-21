@@ -67,9 +67,9 @@ describe('CarouselComponent', () => {
       });
       it('should add image meta tags', () => {
         expect(component['meta'].addTag).toHaveBeenCalledTimes(3);
-        expect(component['meta'].addTag).toHaveBeenNthCalledWith(1, { 'content': 'https://test.link/TEST_IMAGE_1', 'name': 'og:image' });
-        expect(component['meta'].addTag).toHaveBeenNthCalledWith(2, { 'content': 'https://test.link/TEST_IMAGE_2', 'name': 'og:image' });
-        expect(component['meta'].addTag).toHaveBeenNthCalledWith(3, { 'content': 'TEST_ALT_1', 'name': 'og:image:alt' });
+        expect(component['meta'].addTag).toHaveBeenNthCalledWith(1, { 'content': 'https://test.link/TEST_IMAGE_1', property: 'og:image' });
+        expect(component['meta'].addTag).toHaveBeenNthCalledWith(2, { 'content': 'https://test.link/TEST_IMAGE_2', property: 'og:image' });
+        expect(component['meta'].addTag).toHaveBeenNthCalledWith(3, { 'content': 'TEST_ALT_1', property: 'og:image:alt' });
       });
       it('should make the carousel', () => {
         const element = html.querySelectorAll('[test-id=carousel]');
@@ -97,9 +97,9 @@ describe('CarouselComponent', () => {
       });
       it('should add image meta tags', () => {
         expect(component['meta'].addTag).toHaveBeenCalledTimes(3);
-        expect(component['meta'].addTag).toHaveBeenNthCalledWith(1, { 'content': 'TEST_IMAGE_1', 'name': 'og:image' });
-        expect(component['meta'].addTag).toHaveBeenNthCalledWith(2, { 'content': 'TEST_IMAGE_2', 'name': 'og:image' });
-        expect(component['meta'].addTag).toHaveBeenNthCalledWith(3, { 'content': 'TEST_ALT_1', 'name': 'og:image:alt' });
+        expect(component['meta'].addTag).toHaveBeenNthCalledWith(1, { content: 'TEST_IMAGE_1', property: 'og:image' });
+        expect(component['meta'].addTag).toHaveBeenNthCalledWith(2, { content: 'TEST_IMAGE_2', property: 'og:image' });
+        expect(component['meta'].addTag).toHaveBeenNthCalledWith(3, { content: 'TEST_ALT_1', property: 'og:image:alt' });
       });
       it('should make the carousel', () => {
         const element = html.querySelectorAll('[test-id=carousel]');
