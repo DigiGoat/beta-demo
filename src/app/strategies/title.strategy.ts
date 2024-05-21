@@ -20,7 +20,7 @@ export class TitleStrategy extends NgTitleStrategy {
       this.title.setTitle(`${titlePrefix}${this.configService.tabTitle ? ` · ${this.configService.tabTitle}` : ''}`);
       this.meta.addTags([
         { property: 'og:title', content: titlePrefix.split(' · ').shift()! },
-        { property: 'og:url', content: this.configService.link ? (new URL(routerState.url, this.configService.link)).toString() : routerState.url },
+        { property: 'og:url', content: this.configService.link ? (new URL(`.${routerState.url}`, this.configService.link)).toString() : routerState.url },
         { property: 'og:site_name', content: this.configService.homeTitle },
         { property: 'og:type', content: 'website' },
       ]);

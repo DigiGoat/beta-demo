@@ -54,7 +54,7 @@ describe('TitleStrategy', () => {
     });
     it('should add new meta tags', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue('TEST_TITLE');
-      strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
+      strategy.updateTitle({ url: '/TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
       expect(strategy['meta'].addTags).toHaveBeenCalledTimes(1);
       expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ content: 'TEST_TITLE', property: 'og:title' }, { content: 'https://test.link/TEST_URL', property: 'og:url' }, { content: 'TEST_TITLE', property: 'og:site_name' }, { content: 'website', property: 'og:type' }]);
     });

@@ -1,3 +1,6 @@
+## 1.0.1-beta.13
+* Fixed link errors caused by non-base domains
+
 ## 1.0.1-beta.12
 * Fixed link errors resulting from the configured link not ending with a `/`
 

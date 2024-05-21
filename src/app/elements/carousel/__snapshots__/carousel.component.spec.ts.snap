@@ -104,7 +104,7 @@ exports[`CarouselComponent With Images Without a configured link should match th
 <app-carousel
   carousel={[Function Object]}
   carouselElement={[Function _ElementRef]}
-  configService={[Function ConfigService]}
+  configService={[Function Object]}
   images={[Function Array]}
   meta={[Function Object]}
   platformService={[Function PlatformService]}

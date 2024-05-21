@@ -93,6 +93,7 @@ describe('CarouselComponent', () => {
     });
     describe('Without a configured link', () => {
       beforeEach(() => {
+        component['configService'] = {} as ConfigService;
         fixture.detectChanges();
       });
       it('should add image meta tags', () => {
