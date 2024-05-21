@@ -46,7 +46,7 @@ export class ConfigService {
   }
   get link(): string {
     if (this.config['link']) {
-      return this.config['link'] as string;
+      return `${this.config['link']}${(this.config['link'] as string).endsWith('/') ? '' : '/'}`;
     }
     return '';
   }
@@ -56,6 +56,16 @@ export class ConfigService {
     }
     return {};
   }
+  get colorScheme(): ColorScheme {
+    if (this.config['colorScheme']) {
+      return this.config['colorScheme'] as ColorScheme;
+    }
+    return {};
+  }
 }
 
 type Analytics = { gtag?: string, clarity?: string; };
+type ColorScheme = {
+  mainColor?: string, secondaryColor?: string, tertiaryColor?: string, quaternaryColor?: string,
+  mainLightColor?: string, secondaryLightColor?: string, tertiaryLightColor?: string, quaternaryLightColor?: string;
+};

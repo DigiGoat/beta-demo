@@ -72,7 +72,7 @@ describe('ConfigService', () => {
       const spy = jest.spyOn(service, 'link', 'get');
       const link = service.link;
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(link).toBe('TEST_LINK');
+      expect(link).toBe('TEST_LINK/');
     });
     describe('get analytics()', () => {
       let spy: jest.SpyInstance;

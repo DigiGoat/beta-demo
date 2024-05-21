@@ -1,3 +1,6 @@
+## 1.0.1-beta.12
+* Fixed link errors resulting from the configured link not ending with a `/`
+
 ## 1.0.1-beta.11
 * Fixed OpenGraph Tags (Used for titles, links, and images on Facebook and IOS)
 
