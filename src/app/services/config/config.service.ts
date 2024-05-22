@@ -7,7 +7,7 @@ import config from '../../../assets/resources/config.json';
   providedIn: 'root'
 })
 export class ConfigService {
-  private config: Record<string, string | Record<string, string>> = config;
+  private config: Record<string, string | Record<string, string | Record<string, string>>> = config;
   get homeTitle(): string {
     if (this.config['homeTitle']) {
       return this.config['homeTitle'] as string;
@@ -56,9 +56,9 @@ export class ConfigService {
     }
     return {};
   }
-  get colorScheme(): ColorScheme {
-    if (this.config['colorScheme']) {
-      return this.config['colorScheme'] as ColorScheme;
+  get colors(): ColorScheme {
+    if (this.config['colors']) {
+      return this.config['colors'] as ColorScheme;
     }
     return {};
   }
@@ -66,6 +66,15 @@ export class ConfigService {
 
 type Analytics = { gtag?: string, clarity?: string; };
 type ColorScheme = {
-  mainColor?: string, secondaryColor?: string, tertiaryColor?: string, quaternaryColor?: string,
-  mainLightColor?: string, secondaryLightColor?: string, tertiaryLightColor?: string, quaternaryLightColor?: string;
+  background?: 'wood';
+  main?: string;
+  secondary?: string;
+  tertiary?: string;
+  quaternary?: string;
+  light?: {
+    main?: string;
+    secondary?: string;
+    tertiary?: string;
+    quaternary?: string;
+  };
 };

@@ -11,6 +11,20 @@ export const ConfigServiceMock = {
   analytics: {
     clarity: 'TEST_CLARITY',
     gtag: 'TEST_GTAG'
+  },
+  colors: {
+    background: 'wood',
+    main: 'TEST_MAIN',
+    secondary: 'TEST_SECONDARY',
+    tertiary: 'TEST_TERTIARY',
+    quaternary: 'TEST_QUATERNARY',
+    light: {
+      main: 'TEST_MAIN_LIGHT',
+      secondary: 'TEST_SECONDARY_LIGHT',
+      tertiary: 'TEST_TERTIARY_LIGHT',
+      quaternary: 'TEST_QUATERNARY_LIGHT'
+    }
+
   }
 } as ConfigService;
 export const EmptyConfigServiceMock = {
@@ -20,5 +34,7 @@ export const EmptyConfigServiceMock = {
   homeDescription: '',
   menubarTitle: '',
   tabTitle: '',
-  link: ''
+  link: '',
+  analytics: {},
+  colors: {}
 } as ConfigService;

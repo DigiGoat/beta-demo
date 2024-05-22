@@ -29,6 +29,19 @@ describe('ConfigService', () => {
         analytics: {
           clarity: 'TEST_CLARITY',
           gtag: 'TEST_GTAG'
+        },
+        colors: {
+          background: 'TEST_BACKGROUND',
+          main: 'TEST_MAIN',
+          secondary: 'TEST_SECONDARY',
+          tertiary: 'TEST_TERTIARY',
+          quaternary: 'TEST_QUATERNARY',
+          light: {
+            main: 'TEST_LIGHT_MAIN',
+            secondary: 'TEST_LIGHT_SECONDARY',
+            tertiary: 'TEST_LIGHT_TERTIARY',
+            quaternary: 'TEST_LIGHT_QUATERNARY',
+          },
         }
       };
     });
@@ -68,11 +81,20 @@ describe('ConfigService', () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(tabTitle).toBe('TEST_TAB_TITLE');
     });
-    test('get link()', () => {
-      const spy = jest.spyOn(service, 'link', 'get');
-      const link = service.link;
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(link).toBe('TEST_LINK/');
+    describe('get link()', () => {
+      test('without an ending /', () => {
+        const spy = jest.spyOn(service, 'link', 'get');
+        const link = service.link;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(link).toBe('TEST_LINK/');
+      });
+      test('with an ending /', () => {
+        service['config']['link'] = 'TEST_LINK/';
+        const spy = jest.spyOn(service, 'link', 'get');
+        const link = service.link;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(link).toBe('TEST_LINK/');
+      });
     });
     describe('get analytics()', () => {
       let spy: jest.SpyInstance;
@@ -88,6 +110,55 @@ describe('ConfigService', () => {
         const clarity = service.analytics.clarity;
         expect(spy).toHaveBeenCalledTimes(1);
         expect(clarity).toBe('TEST_CLARITY');
+      });
+    });
+    describe('get colors()', () => {
+      let spy: jest.SpyInstance;
+      beforeEach(() => {
+        spy = jest.spyOn(service, 'colors', 'get');
+      });
+      test('background', () => {
+        const background = service.colors.background;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(background).toBe('TEST_BACKGROUND');
+      });
+      test('main', () => {
+        const main = service.colors.main;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(main).toBe('TEST_MAIN');
+      });
+      test('secondary', () => {
+        const secondary = service.colors.secondary;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(secondary).toBe('TEST_SECONDARY');
+      });
+      test('tertiary', () => {
+        const tertiary = service.colors.tertiary;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(tertiary).toBe('TEST_TERTIARY');
+      });
+      test('quaternary', () => {
+        const quaternary = service.colors.quaternary;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(quaternary).toBe('TEST_QUATERNARY');
+      });
+      describe('light', () => {
+        test('main', () => {
+          const main = service.colors.light!.main;
+          expect(main).toBe('TEST_LIGHT_MAIN');
+        });
+        test('secondary', () => {
+          const secondary = service.colors.light!.secondary;
+          expect(secondary).toBe('TEST_LIGHT_SECONDARY');
+        });
+        test('tertiary', () => {
+          const tertiary = service.colors.light!.tertiary;
+          expect(tertiary).toBe('TEST_LIGHT_TERTIARY');
+        });
+        test('quaternary', () => {
+          const quaternary = service.colors.light!.quaternary;
+          expect(quaternary).toBe('TEST_LIGHT_QUATERNARY');
+        });
       });
     });
   });
@@ -139,6 +210,12 @@ describe('ConfigService', () => {
       const analytics = service.analytics;
       expect(spy).toHaveBeenCalledTimes(1);
       expect(analytics).toEqual({});
+    });
+    test('get colors()', () => {
+      const spy = jest.spyOn(service, 'colors', 'get');
+      const colors = service.colors;
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(colors).toEqual({});
     });
   });
 });

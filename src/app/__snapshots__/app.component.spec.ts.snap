@@ -94,12 +94,18 @@ exports[`AppComponent With a Config (v1.0.0) should match the snapshot 1`] = `
         </ul>
       </div>
     </div>
-  </header><br /><div
-    class="px-3 py-3"
-    style="min-height: 100vh; max-width: 100vw !important;"
+  </header><div
+    class="color-scheme-main"
   >
-    <router-outlet />
-  </div><br /><footer
+    <br />
+    <div
+      class="px-3 py-3"
+      style="min-height: 100vh; max-width: 100vw !important;"
+    >
+      <router-outlet />
+    </div>
+    <br />
+  </div><footer
     class="bd-footer color-scheme-secondary"
   >
     <br />
@@ -133,7 +139,7 @@ exports[`AppComponent With a Config (v1.0.0) should match the snapshot 1`] = `
       </a>
     </div>
     <br />
-  </footer><analytics />
+  </footer><analytics /><color-scheme />
 </app-root>
 `;
 
@@ -229,12 +235,18 @@ exports[`AppComponent Without a Config should match the snapshot 1`] = `
         </ul>
       </div>
     </div>
-  </header><br /><div
-    class="px-3 py-3"
-    style="min-height: 100vh; max-width: 100vw !important;"
+  </header><div
+    class="color-scheme-main"
   >
-    <router-outlet />
-  </div><br /><footer
+    <br />
+    <div
+      class="px-3 py-3"
+      style="min-height: 100vh; max-width: 100vw !important;"
+    >
+      <router-outlet />
+    </div>
+    <br />
+  </div><footer
     class="bd-footer color-scheme-secondary"
   >
     <br />
@@ -266,6 +278,6 @@ exports[`AppComponent Without a Config should match the snapshot 1`] = `
       </a>
     </div>
     <br />
-  </footer><analytics />
+  </footer><analytics /><color-scheme />
 </app-root>
 `;

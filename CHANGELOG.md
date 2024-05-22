@@ -1,3 +1,7 @@
+## 1.0.1-beta.14
+* Added support for custom color-schemes
+* This also includes support for images as the background (by request only for security reasons)
+
 ## 1.0.1-beta.13
 * Fixed link errors caused by non-base domains
 

@@ -74,6 +74,7 @@ async function checkChangelog() {
   } else {
     summary.push('- [x] Changelog Check: Changes made to the changelog');
     summary.push('## Changelog Preview:', ('\n' + changes).split('\n#').join('\n###'));
+    namePullRequest(changes);
   }
 }
 (async () => {
@@ -104,6 +105,13 @@ async function checkChangelog() {
   console.log('Posting the summary...');
   await postSummary();
 })();
+
+async function namePullRequest(changes: string) {
+  await github.patch(`/repos/${process.env['GITHUB_REPOSITORY']}/pulls/${process.env['GITHUB_REF_NAME']!.split('/')[0]}`, {
+    title: packageJson.version,
+    body: changes
+  });
+}
 
 async function postSummary() {
   await github.post(`/repos/${process.env['GITHUB_REPOSITORY']}/issues/${process.env['GITHUB_REF_NAME']!.split('/')[0]}/comments`, {
