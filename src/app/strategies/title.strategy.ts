@@ -23,6 +23,7 @@ export class TitleStrategy extends NgTitleStrategy {
         { property: 'og:url', content: this.configService.link ? (new URL(`.${routerState.url}`, this.configService.link)).toString() : routerState.url },
         { property: 'og:site_name', content: this.configService.homeTitle },
         { property: 'og:type', content: 'website' },
+        { name: 'apple-mobile-web-app-title', content: this.configService.homeTitle }
       ]);
     } else {
       this.title.setTitle(this.configService.tabTitle);

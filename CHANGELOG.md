@@ -1,3 +1,6 @@
+## 1.0.1-beta.15
+* Now when you add the site to you home screen on IOS, the title will be correct
+
 ## 1.0.1-beta.14
 * Added support for custom color-schemes
 * This also includes support for images as the background (by request only for security reasons)

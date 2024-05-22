@@ -56,7 +56,7 @@ describe('TitleStrategy', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue('TEST_TITLE');
       strategy.updateTitle({ url: '/TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
       expect(strategy['meta'].addTags).toHaveBeenCalledTimes(1);
-      expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ content: 'TEST_TITLE', property: 'og:title' }, { content: 'https://test.link/TEST_URL', property: 'og:url' }, { content: 'TEST_TITLE', property: 'og:site_name' }, { content: 'website', property: 'og:type' }]);
+      expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ content: 'TEST_TITLE', property: 'og:title' }, { content: 'https://test.link/TEST_URL', property: 'og:url' }, { content: 'TEST_TITLE', property: 'og:site_name' }, { content: 'website', property: 'og:type' }, { content: 'TEST_TITLE', name: 'apple-mobile-web-app-title' }]);
     });
   });
   describe('Without a Config', () => {
@@ -101,7 +101,7 @@ describe('TitleStrategy', () => {
       jest.spyOn(strategy, 'buildTitle').mockReturnValue('TEST_TITLE');
       strategy.updateTitle({ url: 'TEST_URL', root: { children: [] } } as unknown as RouterStateSnapshot);
       expect(strategy['meta'].addTags).toHaveBeenCalledTimes(1);
-      expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ content: 'TEST_TITLE', property: 'og:title' }, { content: 'TEST_URL', property: 'og:url' }, { content: '', property: 'og:site_name' }, { content: 'website', property: 'og:type' }]);
+      expect(strategy['meta'].addTags).toHaveBeenCalledWith([{ content: 'TEST_TITLE', property: 'og:title' }, { content: 'TEST_URL', property: 'og:url' }, { content: '', property: 'og:site_name' }, { content: 'website', property: 'og:type' }, { content: '', name: 'apple-mobile-web-app-title' }]);
     });
   });
   describe('Analytics', () => {
