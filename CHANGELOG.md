@@ -1,3 +1,6 @@
+## 1.0.1-beta.17
+* Fixed some paths in the deploy script
+
 ## 1.0.1-beta.16
 * Added webmanifest
 * Added Browser Config

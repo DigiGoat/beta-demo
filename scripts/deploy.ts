@@ -104,7 +104,7 @@ function manifest() {
     mkdirSync(join(__dirname, '../dist/web-ui/browser/assets/icons/'), { recursive: true });
   }
   log.debug('Writing Manifest');
-  writeFileSync(join(__dirname, '../dist/web-ui/browser/site.webmanifest'), JSON.stringify({
+  writeFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/site.webmanifest'), JSON.stringify({
     background_color: typeof config['colors'] == 'object' ? config['colors']['main'] : undefined,
     description: config['homeDescription'],
     display: 'standalone',
@@ -121,7 +121,7 @@ function manifest() {
       }
     ].map(icon => url ? url.pathname + (url.pathname.endsWith('/') ? '' : '/') + icon.src.slice(2) : icon.src) : [],
     name: config['homeTitle'],
-    scope: url?.toString(),
+    scope: url?.toString().endsWith('/') ? url?.toString() : url?.toString() + '/',
     short_name: config['tabTitle'],
     shortcuts: [
       {
@@ -133,8 +133,8 @@ function manifest() {
         url: './bucks/',
       }
     ].map(shortcut => url ? url.pathname + (url.pathname.endsWith('/') ? '' : '/') + shortcut.url.slice(2) : shortcut.url),
-    start_url: url?.pathname,
-    theme_color: config['colors']
+    start_url: url?.pathname.endsWith('/') ? url?.pathname : url?.pathname + '/',
+    theme_color: typeof config['colors'] == 'object' ? config['colors']['secondary'] : undefined
   }, null, 2));
 }
 function browserConfig() {
@@ -144,7 +144,7 @@ function browserConfig() {
     return;
   }
   log.debug('Writing Browser Config');
-  writeFileSync(join(__dirname, '../dist/web-ui/browser/browserconfig.xml'), readFileSync(join(__dirname, '../src/assets/resources/browserconfig.xml'), 'utf-8').replace('/mstile-150x150.png', url?.pathname ? (url.pathname.endsWith('/') ? url.pathname : url.pathname + '/') + 'assets/icons/mstile-150x150.png' : './assets/icons/mstile-150x150.png'));
+  writeFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), readFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), 'utf-8').replace('/mstile-150x150.png', url?.pathname ? (url.pathname.endsWith('/') ? url.pathname : url.pathname + '/') + 'assets/icons/mstile-150x150.png' : './assets/icons/mstile-150x150.png'));
 }
 
 log.info('Routing...');
