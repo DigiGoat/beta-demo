@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { execSync } from 'child_process';
-import { copyFileSync, lstatSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
+import { copyFileSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import type { Goat } from '../src/app/services/goat/goat.service';
 
@@ -13,7 +13,7 @@ const log = {
   success: (...message: unknown[]): void => console.log(chalk.greenBright(...message))
 };
 
-const config: Record<string, string> = JSON.parse(readFileSync(join(__dirname, '../src/assets/resources/config.json'), 'utf-8'));
+const config: Record<string, string | Record<string, string | Record<string, string>>> = JSON.parse(readFileSync(join(__dirname, '../src/assets/resources/config.json'), 'utf-8'));
 if (process.argv[2]) {
   if (URL.canParse(process.argv[2])) {
     log.debug(`Adding '${process.argv[2]}' to the Config`);
@@ -25,7 +25,7 @@ if (process.argv[2]) {
 
   }
 }
-const url = config['link'] ? new URL(config['link']) : undefined;
+const url = config['link'] ? new URL(config['link'] as string) : undefined;
 function route() {
   const routes: string[] = ['/404'];
   log.debug('Identifying Doe Routes');
@@ -95,6 +95,57 @@ User-agent: *
 Disallow:${link ? `
 Sitemap: ${link.endsWith('/') ? link.slice(0, -1) : link}/sitemap.txt` : ''}`);
 }
+function manifest() {
+  let icons = true;
+  if (!existsSync(join(__dirname, '../dist/web-ui/browser/assets/icons/'))) {
+    log.error('ICONS DIRECTORY NOT FOUND');
+    log.warn('↳ Excluding Icons From Manifest');
+    icons = false;
+    mkdirSync(join(__dirname, '../dist/web-ui/browser/assets/icons/'), { recursive: true });
+  }
+  log.debug('Writing Manifest');
+  writeFileSync(join(__dirname, '../dist/web-ui/browser/site.webmanifest'), JSON.stringify({
+    background_color: typeof config['colors'] == 'object' ? config['colors']['main'] : undefined,
+    description: config['homeDescription'],
+    display: 'standalone',
+    icons: icons ? [
+      {
+        src: './assets/icons/android-chrome-192x192.png',
+        sizes: '192x192',
+        type: 'image/png'
+      },
+      {
+        src: './assets/icons/android-chrome-512x512.png',
+        sizes: '512x512',
+        type: 'image/png'
+      }
+    ].map(icon => url ? url.pathname + (url.pathname.endsWith('/') ? '' : '/') + icon.src.slice(2) : icon.src) : [],
+    name: config['homeTitle'],
+    scope: url?.toString(),
+    short_name: config['tabTitle'],
+    shortcuts: [
+      {
+        name: 'Does',
+        url: './does/',
+      },
+      {
+        name: 'Bucks',
+        url: './bucks/',
+      }
+    ].map(shortcut => url ? url.pathname + (url.pathname.endsWith('/') ? '' : '/') + shortcut.url.slice(2) : shortcut.url),
+    start_url: url?.pathname,
+    theme_color: config['colors']
+  }, null, 2));
+}
+function browserConfig() {
+  if (!existsSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'))) {
+    log.error('BROWSER CONFIG NOT FOUND');
+    log.warn('↳ Skipping Browser Config Generation');
+    return;
+  }
+  log.debug('Writing Browser Config');
+  writeFileSync(join(__dirname, '../dist/web-ui/browser/browserconfig.xml'), readFileSync(join(__dirname, '../src/assets/resources/browserconfig.xml'), 'utf-8').replace('/mstile-150x150.png', url?.pathname ? (url.pathname.endsWith('/') ? url.pathname : url.pathname + '/') + 'assets/icons/mstile-150x150.png' : './assets/icons/mstile-150x150.png'));
+}
 
 log.info('Routing...');
 route();
@@ -124,4 +175,8 @@ if (url) {
   log.warn('↳ Omitting Sitemap From robots.txt');
   robots();
 }
+log.info('Generating Manifest...');
+manifest();
+log.info('Generating Browser Config...');
+browserConfig();
 log.success('Done.');

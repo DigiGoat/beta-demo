@@ -1,3 +1,7 @@
+## 1.0.1-beta.16
+* Added webmanifest
+* Added Browser Config
+
 ## 1.0.1-beta.15
 * Now when you add the site to you home screen on IOS, the title will be correct
 
