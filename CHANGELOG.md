@@ -1,3 +1,6 @@
+## 1.0.1-beta.18
+* Fixed webmanifest shortcuts being improperly formatted
+
 ## 1.0.1-beta.17
 * Fixed some paths in the deploy script
 

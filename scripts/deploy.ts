@@ -132,7 +132,10 @@ function manifest() {
         name: 'Bucks',
         url: './bucks/',
       }
-    ].map(shortcut => url ? url.pathname + (url.pathname.endsWith('/') ? '' : '/') + shortcut.url.slice(2) : shortcut.url),
+    ].map(shortcut => {
+      shortcut.url = url ? url.pathname + (url.pathname.endsWith('/') ? '' : '/') + shortcut.url.slice(2) : shortcut.url;
+      return shortcut;
+    }),
     start_url: url?.pathname.endsWith('/') ? url?.pathname : url?.pathname + '/',
     theme_color: typeof config['colors'] == 'object' ? config['colors']['secondary'] : undefined
   }, null, 2));
