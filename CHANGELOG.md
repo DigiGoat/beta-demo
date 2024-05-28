@@ -1,3 +1,7 @@
+## 1.0.1-beta.19
+* (hopefully) fixed the icon links in the webmanifest
+* Added the default theme and background colors to the webmanifest
+
 ## 1.0.1-beta.18
 * Fixed webmanifest shortcuts being improperly formatted
 

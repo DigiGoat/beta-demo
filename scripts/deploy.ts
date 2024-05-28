@@ -105,23 +105,23 @@ function manifest() {
   }
   log.debug('Writing Manifest');
   writeFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/site.webmanifest'), JSON.stringify({
-    background_color: typeof config['colors'] == 'object' ? config['colors']['main'] : undefined,
+    background_color: typeof config['colors'] == 'object' ? config['colors']['main'] : 'hsl(230, 100%, 10%)',
     description: config['homeDescription'],
     display: 'standalone',
     icons: icons ? [
       {
-        src: './assets/icons/android-chrome-192x192.png',
+        src: './android-chrome-192x192.png',
         sizes: '192x192',
         type: 'image/png'
       },
       {
-        src: './assets/icons/android-chrome-512x512.png',
+        src: './android-chrome-512x512.png',
         sizes: '512x512',
         type: 'image/png'
       }
-    ].map(icon => url ? url.pathname + (url.pathname.endsWith('/') ? '' : '/') + icon.src.slice(2) : icon.src) : [],
+    ].map(icon => url ? url.toString() + (url.toString().endsWith('/') ? 'assets/icons/' : '/assets/icons/') + icon.src.slice(2) : icon.src) : [],
     name: config['homeTitle'],
-    scope: url?.toString().endsWith('/') ? url?.toString() : url?.toString() + '/',
+    scope: url ? (url.toString().endsWith('/') ? url.toString() : url.toString() + '/') : undefined,
     short_name: config['tabTitle'],
     shortcuts: [
       {
@@ -136,8 +136,8 @@ function manifest() {
       shortcut.url = url ? url.pathname + (url.pathname.endsWith('/') ? '' : '/') + shortcut.url.slice(2) : shortcut.url;
       return shortcut;
     }),
-    start_url: url?.pathname.endsWith('/') ? url?.pathname : url?.pathname + '/',
-    theme_color: typeof config['colors'] == 'object' ? config['colors']['secondary'] : undefined
+    start_url: url ? (url.pathname.endsWith('/') ? url.pathname : url.pathname + '/') : undefined,
+    theme_color: typeof config['colors'] == 'object' ? config['colors']['secondary'] : 'hsl(230, 100%, 15%)'
   }, null, 2));
 }
 function browserConfig() {
