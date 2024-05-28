@@ -119,16 +119,27 @@ function manifest() {
         sizes: '512x512',
         type: 'image/png'
       }
-    ].map(icon => {
-      if (url) {
-        url.toString() + (url.toString().endsWith('/') ? 'assets/icons/' : '/assets/icons/') + icon.src.slice(2);
-      }
-      return icon;
-    }) : [],
+    ] : [],
     name: config['homeTitle'],
     scope: url ? (url.toString().endsWith('/') ? url.toString() : url.toString() + '/') : undefined,
     short_name: config['tabTitle'],
     shortcuts: [
+      {
+        name: 'Home',
+        url: './',
+        icons: [
+          {
+            src: './android-chrome-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: './android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      },
       {
         name: 'Does',
         url: './does/',
@@ -152,7 +163,7 @@ function browserConfig() {
     return;
   }
   log.debug('Writing Browser Config');
-  writeFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), readFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), 'utf-8').replace('/mstile-150x150.png', url ? (url.toString().endsWith('/') ? url.toString() : url.toString() + '/') + 'assets/icons/mstile-150x150.png' : './assets/icons/mstile-150x150.png'));
+  writeFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), readFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), 'utf-8').replace('/mstile-150x150.png', './mstile-150x150.png'));
 }
 
 log.info('Routing...');

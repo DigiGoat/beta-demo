@@ -2,6 +2,15 @@ name: Jest Testing
 
 on:
   push:
+    paths:
+      - 'src/**'
+      - '.github/workflows/test.yml'
+      - 'jest.config.ts'
+  pull_request:
+    paths-ignore:
+      - 'src/**'
+      - '.github/workflows/test.yml'
+      - 'jest.config.ts'
   workflow_dispatch:
 
 permissions:

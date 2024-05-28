@@ -1,3 +1,6 @@
+## 1.0.1-beta.21
+* Added a shortcut for the homepage
+
 ## 1.0.1-beta.20
 * Fixed the icons array being collapsed in the webmanifest
 
