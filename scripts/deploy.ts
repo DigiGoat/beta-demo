@@ -119,7 +119,12 @@ function manifest() {
         sizes: '512x512',
         type: 'image/png'
       }
-    ].map(icon => url ? url.toString() + (url.toString().endsWith('/') ? 'assets/icons/' : '/assets/icons/') + icon.src.slice(2) : icon.src) : [],
+    ].map(icon => {
+      if (url) {
+        url.toString() + (url.toString().endsWith('/') ? 'assets/icons/' : '/assets/icons/') + icon.src.slice(2);
+      }
+      return icon;
+    }) : [],
     name: config['homeTitle'],
     scope: url ? (url.toString().endsWith('/') ? url.toString() : url.toString() + '/') : undefined,
     short_name: config['tabTitle'],
@@ -147,7 +152,7 @@ function browserConfig() {
     return;
   }
   log.debug('Writing Browser Config');
-  writeFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), readFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), 'utf-8').replace('/mstile-150x150.png', url?.pathname ? (url.pathname.endsWith('/') ? url.pathname : url.pathname + '/') + 'assets/icons/mstile-150x150.png' : './assets/icons/mstile-150x150.png'));
+  writeFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), readFileSync(join(__dirname, '../dist/web-ui/browser/assets/icons/browserconfig.xml'), 'utf-8').replace('/mstile-150x150.png', url ? (url.toString().endsWith('/') ? url.toString() : url.toString() + '/') + 'assets/icons/mstile-150x150.png' : './assets/icons/mstile-150x150.png'));
 }
 
 log.info('Routing...');

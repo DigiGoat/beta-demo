@@ -1,3 +1,6 @@
+## 1.0.1-beta.20
+* Fixed the icons array being collapsed in the webmanifest
+
 ## 1.0.1-beta.19
 * (hopefully) fixed the icon links in the webmanifest
 * Added the default theme and background colors to the webmanifest
