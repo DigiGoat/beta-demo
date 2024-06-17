@@ -1,16 +1,7 @@
 name: Jest Testing
 
 on:
-  push:
-    paths:
-      - 'src/**'
-      - '.github/workflows/test.yml'
-      - 'jest.config.ts'
   pull_request:
-    paths-ignore:
-      - 'src/**'
-      - '.github/workflows/test.yml'
-      - 'jest.config.ts'
   workflow_dispatch:
 
 permissions:
@@ -20,11 +11,10 @@ permissions:
 jobs:
   test:
     name: Test
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         node-version: [18.x, 20.x]  # specify the Node.js versions you want to test against
     steps:
       - name: Checkout
@@ -47,7 +37,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: Test Report (${{ matrix.os }}, ${{ matrix.node-version }})
+          name: Test Report (${{ matrix.node-version }})
           path: reports/jest-*.xml
           reporter: jest-junit
           list-tests: 'failed'

@@ -22,6 +22,7 @@
       setTheme();
       window.matchMedia('(prefers-color-scheme: dark)').onchange = setTheme;
     </script>
+    <link rel="preload" href="bootstrap.bundle.js" as="script" fetchpriority="high">
   </head>
   <body class="color-scheme-main">
     <noscript>
@@ -30,5 +31,6 @@
           Enable It</h5>
     </noscript>
     <app-root></app-root>
+    <script src="bootstrap.bundle.js" defer></script>
   </body>
 </html>

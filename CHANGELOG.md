@@ -1,3 +1,6 @@
+## 1.0.1-beta.22
+* Made the bootstrap bundle cachable and high priority
+
 ## 1.0.1-beta.21
 * Added a shortcut for the homepage
 
